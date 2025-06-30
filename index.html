@@ -10,28 +10,28 @@
     body {
       background-color: #fff6f0;
     }
-
+  
     .vene-border {
       border: 4px solid #7f1d1d;
     }
-
+  
     .vene-card {
-      background-color: #fffaf7; /* más claro que el fondo general */
+      background-color: #fffdfc; /* más claro que antes */
     }
-
+  
     .file-list-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
+  
     .remove-btn {
       cursor: pointer;
       color: #a83232;
       font-weight: bold;
       margin-left: 8px;
     }
-  </style>
+  </style>  
 </head>
 <body class="flex items-center justify-center min-h-screen">
   <div class="vene-card vene-border p-8 rounded-2xl shadow-xl w-full max-w-xl text-center relative z-10">
@@ -41,7 +41,7 @@
     <form id="formularioDocumentos" class="space-y-6">
       <div>
         <label class="block font-medium text-left text-[#7f1d1d] mb-1">Adjuntar cierre de caja en formato PDF 🧾:</label>
-        <input id="fileInput" name="documentos" type="file" accept="application/pdf" multiple required
+        <input id="fileInput" name="data" type="file" accept="application/pdf" multiple required
           class="block w-full text-sm text-gray-700 file:w-full file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#7f1d1d] file:text-white hover:file:bg-[#a83232]" />
       </div>
 
@@ -116,7 +116,7 @@
       submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
       const formData = new FormData();
-      archivos.forEach(file => formData.append('documentos', file));
+      archivos.forEach(file => formData.append('data', file)); // 👈 Clave cambiada aquí
 
       try {
         const response = await fetch('https://n8n.dev.karibuspa.com/webhook-test/ceninas_venezia', {
@@ -125,13 +125,13 @@
         });
 
         if (response.ok) {
-          estadoEnvio.textContent = '¡Documentos enviados con éxito!';
+          estadoEnvio.textContent = '¡Documento enviado con éxito!';
           estadoEnvio.className = 'text-green-600 text-sm mt-2 font-medium';
           form.reset();
           archivos = [];
           fileList.innerHTML = '';
         } else {
-          estadoEnvio.textContent = 'Error al enviar los documentos. Intenta nuevamente.';
+          estadoEnvio.textContent = 'Error al enviar documento. Intenta nuevamente.';
           estadoEnvio.className = 'text-red-600 text-sm mt-2 font-medium';
         }
       } catch (error) {
