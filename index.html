@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-        background-color: #fff6f0; /* mismo color que el formulario */
+        background-color: #fff6f0;
     }
 
     .vene-border {
@@ -16,11 +16,20 @@
     }
 
     .vene-card {
-      background-color: #fff6f0; /* Marfil suave */
+      background-color: #fff6f0;
     }
 
-    .vene-file-button {
-      @apply file:w-full file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:text-white;
+    .file-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .remove-btn {
+      cursor: pointer;
+      color: #a83232;
+      font-weight: bold;
+      margin-left: 8px;
     }
   </style>
 </head>
@@ -33,30 +42,82 @@
       <div>
         <label class="block font-medium text-left text-[#7f1d1d] mb-1">Adjuntar cierre de caja en formato PDF 🧾:</label>
         <input id="fileInput" name="documentos" type="file" accept="application/pdf" multiple required
-          class="block w-full text-sm text-gray-700 file:bg-[#d88a7a] hover:file:bg-[#b65e54] vene-file-button" />
+          class="block w-full text-sm text-gray-700 file:w-full file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#7f1d1d] file:text-white hover:file:bg-[#a83232]" />
       </div>
 
-      <ul id="fileList" class="text-left text-sm text-[#5c2a2a] list-disc list-inside"></ul>
+      <ul id="fileList" class="text-left text-sm text-[#5c2a2a] list-inside"></ul>
 
       <div class="flex justify-center">
-        <button type="submit" class="bg-[#7f1d1d] hover:bg-[#a83232] text-white font-semibold py-1.5 px-4 rounded-lg transition duration-300 text-sm">
-            Enviar
+        <button type="submit" id="submitBtn" class="bg-[#7f1d1d] hover:bg-[#a83232] text-white font-semibold py-1.5 px-4 rounded-lg transition duration-300 text-sm">
+          Enviar
         </button>          
       </div>
+
+      <p id="estadoEnvio" class="text-sm mt-2 text-[#7f1d1d] font-medium"></p>
     </form>
   </div>
 
   <script>
     const fileInput = document.getElementById('fileInput');
     const fileList = document.getElementById('fileList');
+    const form = document.getElementById('formularioDocumentos');
+    const estadoEnvio = document.getElementById('estadoEnvio');
+    const submitBtn = document.getElementById('submitBtn');
+
+    let archivos = [];
 
     fileInput.addEventListener('change', () => {
+      archivos = Array.from(fileInput.files);
+      actualizarListaArchivos();
+    });
+
+    function actualizarListaArchivos() {
       fileList.innerHTML = '';
-      Array.from(fileInput.files).forEach(file => {
+      archivos.forEach((file, index) => {
         const li = document.createElement('li');
-        li.textContent = `📄 ${file.name}`;
+        li.className = 'file-list-item';
+
+        const nombreArchivo = document.createElement('span');
+        nombreArchivo.textContent = `📄 ${file.name}`;
+
+        const eliminar = document.createElement('span');
+        eliminar.textContent = '❌';
+        eliminar.className = 'remove-btn';
+        eliminar.onclick = () => {
+          archivos.splice(index, 1);
+          actualizarInput();
+          actualizarListaArchivos();
+        };
+
+        li.appendChild(nombreArchivo);
+        li.appendChild(eliminar);
         fileList.appendChild(li);
       });
+    }
+
+    function actualizarInput() {
+      const dataTransfer = new DataTransfer();
+      archivos.forEach(file => dataTransfer.items.add(file));
+      fileInput.files = dataTransfer.files;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Mostrar cargando
+      estadoEnvio.textContent = 'Enviando...';
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+      // Simular envío (puedes reemplazar esto con lógica real o dejarlo)
+      setTimeout(() => {
+        estadoEnvio.textContent = '¡Documentos enviados con éxito!';
+        form.reset();
+        fileList.innerHTML = '';
+        archivos = [];
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }, 2000);
     });
   </script>
 </body>
