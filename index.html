@@ -18,25 +18,29 @@
     .vene-card {
       background-color: #fff6f0; /* Marfil suave */
     }
+
+    .vene-file-button {
+      @apply file:w-full file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:text-white;
+    }
   </style>
 </head>
 <body class="flex items-center justify-center min-h-screen">
   <div class="vene-card vene-border p-8 rounded-2xl shadow-xl w-full max-w-xl text-center relative z-10">
-    <img src="/logo.png" alt="Venezia Logo" class="mx-auto mb-4 w-32 h-32 rounded-full border-4 border-[#7f1d1d] object-cover shadow-md" />
+    <img src="/logo.png" alt="Venezia Logo" class="mx-auto mb-4 w-32 h-32 object-cover shadow-md" />
     <h2 class="text-2xl font-bold text-[#7f1d1d] mb-4">Sabores de Excelencia</h2>
 
     <form id="formularioDocumentos" action="https://n8n.dev.karibuspa.com/webhook-test/ceninas_venezia" method="POST" enctype="multipart/form-data" class="space-y-6">
       <div>
         <label class="block font-medium text-left text-[#7f1d1d] mb-1">Adjuntar cierre de caja en formato PDF 🧾:</label>
         <input id="fileInput" name="documentos" type="file" accept="application/pdf" multiple required
-          class="block w-full text-sm text-gray-700 file:w-full file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#7f1d1d] file:text-white hover:file:bg-[#a83232]" />
+          class="block w-full text-sm text-gray-700 file:bg-[#d88a7a] hover:file:bg-[#b65e54] vene-file-button" />
       </div>
 
       <ul id="fileList" class="text-left text-sm text-[#5c2a2a] list-disc list-inside"></ul>
 
       <div class="flex justify-center">
-        <button type="submit" class="w-full bg-[#7f1d1d] hover:bg-[#a83232] text-white font-semibold py-2 px-3 rounded-lg transition duration-300 text-sm">
-            Enviar Documentos
+        <button type="submit" class="bg-[#7f1d1d] hover:bg-[#a83232] text-white font-semibold py-1.5 px-4 rounded-lg transition duration-300 text-sm">
+            Enviar
         </button>          
       </div>
     </form>
