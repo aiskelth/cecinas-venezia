@@ -9,11 +9,10 @@
   <style>
     body {
       background-color: #fef9f6;
-      background-image: url('fondo-iconos.png'); /* Fondo inspirado en íconos */
+      background-image: url('fondo-iconos.png'); /* fondo generado estilo sutil */
       background-repeat: repeat;
-      background-size: 180px; /* Puedes ajustar a 100px o 250px según prefieras */
+      background-size: 180px;
       background-position: center;
-      opacity: 0.98;
     }
 
     .vene-border {
@@ -24,12 +23,12 @@
 <body class="flex items-center justify-center min-h-screen">
   <div class="bg-white vene-border p-8 rounded-lg shadow-lg w-full max-w-xl text-center relative z-10">
     <img src="/logo.png" alt="Venezia Logo" class="mx-auto mb-4 w-40" />
-    <h2 class="text-2xl font-bold text-[#7f1d1d] mb-2">Sabores de Excelencia</h2>
+    <h2 class="text-2xl font-bold text-[#7f1d1d] mb-1">Sabores de Excelencia</h2>
     <p class="text-gray-600 mb-6">Adjunta tus facturas en formato PDF 🧾🥩</p>
 
     <form id="formularioDocumentos" action="https://TU_WEBHOOK.n8n.app/webhook/pdfs" method="POST" enctype="multipart/form-data" class="space-y-6">
       <div>
-        <label class="block font-medium text-left text-[#7f1d1d] mb-1">Adjuntar facturas en formato PDF 🧾🥩:</label>
+        <label class="block font-medium text-left text-[#7f1d1d] mb-1">Adjuntar facturas en formato PDF 🧾:</label>
         <input id="fileInput" name="documentos" type="file" accept="application/pdf" multiple required
           class="block w-full text-sm text-gray-700 file:w-full file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#7f1d1d] file:text-white hover:file:bg-[#a83232]" />
       </div>
