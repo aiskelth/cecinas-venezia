@@ -8,7 +8,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background-color: #f9f9f9;
+      background-color: #fef9f6;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/1046/1046784.png');
+      background-repeat: repeat;
+      background-size: 100px;
+      opacity: 0.98;
     }
     .vene-border {
       border: 4px solid #7f1d1d;
@@ -16,24 +20,40 @@
   </style>
 </head>
 <body class="flex items-center justify-center min-h-screen">
-  <div class="bg-white vene-border p-8 rounded-lg shadow-lg w-full max-w-xl text-center">
+  <div class="bg-white vene-border p-8 rounded-lg shadow-lg w-full max-w-xl text-center relative z-10">
     <img src="/logo.png" alt="Venezia Logo" class="mx-auto mb-4 w-40" />
     <h2 class="text-2xl font-bold text-[#7f1d1d] mb-2">Sabores de Excelencia</h2>
-    <p class="text-gray-600 mb-6">Adjunta tus documentos relacionados con carnes y cecinas.</p>
+    <p class="text-gray-600 mb-6">Adjunta tus facturas en formato PDF 🧾🥩</p>
 
     <form id="formularioDocumentos" action="https://TU_WEBHOOK.n8n.app/webhook/pdfs" method="POST" enctype="multipart/form-data" class="space-y-6">
       <div>
-        <label class="block font-medium text-left text-[#7f1d1d] mb-1">Selecciona tus documentos PDF:</label>
-        <input name="documentos" type="file" accept="application/pdf" multiple required
-          class="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#7f1d1d] file:text-white hover:file:bg-[#a83232]" />
+        <label class="block font-medium text-left text-[#7f1d1d] mb-1">Adjuntar facturas en formato PDF 🧾🥩:</label>
+        <input id="fileInput" name="documentos" type="file" accept="application/pdf" multiple required
+          class="block w-full text-sm text-gray-700 file:w-full file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-[#7f1d1d] file:text-white hover:file:bg-[#a83232]" />
       </div>
 
+      <ul id="fileList" class="text-left text-sm text-gray-700 list-disc list-inside"></ul>
+
       <div class="flex justify-center">
-        <button type="submit" class="bg-[#7f1d1d] hover:bg-[#a83232] text-white font-semibold py-2 px-6 rounded-lg">
+        <button type="submit" class="w-full bg-[#7f1d1d] hover:bg-[#a83232] text-white font-semibold py-2 px-4 rounded-lg">
           Enviar Documentos
         </button>
       </div>
     </form>
   </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+
+    fileInput.addEventListener('change', () => {
+      fileList.innerHTML = '';
+      Array.from(fileInput.files).forEach(file => {
+        const li = document.createElement('li');
+        li.textContent = `📄 ${file.name}`;
+        fileList.appendChild(li);
+      });
+    });
+  </script>
 </body>
 </html>
